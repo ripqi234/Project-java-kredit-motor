@@ -1,0 +1,152 @@
+START
+CLASS DataPembeli
+    PROPERTIES:
+        namaPembeli: string
+        jenisMotor: string 
+        NIK: string
+        alamat: string
+        umur: integer
+        hargaMotor: integer
+        uangMuka: integer 
+        lamaCicilan: integer
+        cicilanPerBulan: integer
+
+    CONSTRUCTOR(namaPembeli, NIK, umur, alamat, jenisMotor, hargaMotor, uangMuka, lamaCicilan)
+        SET this.namaPembeli = namaPembeli
+        SET this.NIK = NIK
+        SET this.umur = umur 
+        SET this.alamat = alamat
+        SET this.jenisMotor = jenisMotor
+        SET this.hargaMotor = hargaMotor
+        SET this.uangMuka = uangMuka
+        SET this.lamaCicilan = lamaCicilan
+        SET this.cicilanPerBulan = (hargaMotor - uangMuka) / lamaCicilan
+
+CLASS KreditMotor
+    pembeliList = new ArrayList()
+
+    PROCEDURE main()
+        PRINT "PROGRAM KREDIT MOTOR FIFGROUP"
+        PRINT "Nama : MOH RIFQI MIFFTAKHULKHOIR" 
+        PRINT "NIM  : 24.240.0040"
+        
+        WHILE true
+            CALL showMenu()
+        END WHILE
+    END PROCEDURE
+
+    PROCEDURE showMenu()
+        PRINT "MENU UTAMA"
+        PRINT "1. Isi Formulir Kredit"
+        PRINT "2. Lihat Laporan"
+        PRINT "3. Koreksi/Edit Data"
+        PRINT "4. Hapus Data"
+        PRINT "5. Selesai"
+        INPUT pilihan
+
+        IF pilihan = 1 THEN
+            CALL isiData()
+        ELSE IF pilihan = 2 THEN
+            CALL lihatLaporan()
+        ELSE IF pilihan = 3 THEN
+            CALL editData()
+        ELSE IF pilihan = 4 THEN
+            CALL hapusData()
+        ELSE IF pilihan = 5 THEN
+            PRINT "Program selesai. Terima kasih!"
+            EXIT PROGRAM
+        ELSE 
+            PRINT "Pilihan tidak valid!"
+        END IF
+    END PROCEDURE
+
+    PROCEDURE isiData()
+        DO
+            INPUT namaPembeli
+            INPUT NIK
+            INPUT umur
+            INPUT alamat
+            
+            PRINT "Pilih Jenis Motor:"
+            PRINT daftar motor dan harga
+            INPUT pilihanMotor
+            
+            SET jenisMotor dan hargaMotor sesuai pilihan
+            
+            INPUT uangMuka
+            IF uangMuka < 2000000 THEN
+                PRINT "Uang muka minimal Rp 2.000.000!"
+                CONTINUE
+            END IF
+            
+            PRINT "Pilih Lama Cicilan"
+            INPUT pilihanCicilan
+            SET lamaCicilan sesuai pilihan
+            
+            CREATE new DataPembeli dan tambahkan ke pembeliList
+            
+            PRINT "Isi data lagi? [Y/T]"
+            INPUT jawaban
+        WHILE jawaban = "Y" OR jawaban = "y"
+    END PROCEDURE
+
+    PROCEDURE lihatLaporan()
+        IF pembeliList kosong THEN
+            PRINT "Belum ada data yang dimasukkan."
+            RETURN
+        END IF
+        
+        SET dataPerHalaman = 3
+        CALCULATE totalHalaman
+        SET grandTotal = 0
+        
+        FOR setiap halaman
+            PRINT header laporan
+            PRINT data pembeli (3 per halaman)
+            CALCULATE subtotal cicilan per halaman
+            ADD subtotal ke grandTotal
+            
+            IF bukan halaman terakhir THEN
+                PRINT "Tekan Enter untuk halaman selanjutnya..."
+            END IF
+        END FOR
+        
+        PRINT grandTotal
+    END PROCEDURE
+
+    PROCEDURE editData()
+        IF pembeliList kosong THEN
+            PRINT "Belum ada data yang dimasukkan."
+            RETURN
+        END IF
+        
+        CALL lihatLaporan()
+        INPUT nomor data yang akan diubah
+        
+        IF nomor valid THEN
+            INPUT data baru
+            UPDATE data pembeli
+            PRINT "Data berhasil diperbarui!"
+        ELSE
+            PRINT "Data tidak ditemukan!"
+        END IF
+    END PROCEDURE
+
+    PROCEDURE hapusData()
+        IF pembeliList kosong THEN
+            PRINT "Belum ada data yang dimasukkan."
+            RETURN
+        END IF
+        
+        CALL lihatLaporan()
+        INPUT nomor data yang akan dihapus
+        
+        IF nomor valid THEN
+            REMOVE data dari pembeliList
+            PRINT "Data berhasil dihapus!"
+        ELSE
+            PRINT "Data tidak ditemukan!"
+        END IF
+    END PROCEDURE
+END CLASS
+END
