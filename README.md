@@ -1,2 +1,0 @@
-# Project-java-kredit-motor
--
